@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\WelcomeController;
 Route::get('/hello', [WelcomeController::class,'hello']);
+
 Route::get('/hello', function () { return 'Hello World';
 });
 
@@ -33,3 +35,28 @@ Route::get('/user/{name?}', function ($name='John') {
     return 'Nama saya '.$name;
 });
 
+// use App\Http\Controllers\PageController;
+// Route::get('/', [PageController::class,'index']);
+
+// use App\Http\Controllers\PageController;
+// Route::get('/about', [PageController::class,'about']);
+
+Route::get('/articles/{id}', [PageController::class,'articles']);
+
+use App\Http\Controllers\HomeController;
+Route::get('/', HomeController::class);
+
+use App\Http\Controllers\AboutController;
+Route::get('/about', AboutController::class);
+
+use App\Http\Controllers\ArticleController;
+Route::get('/article/{id}', ArticleController::class);
+
+use App\Http\Controllers\PhotoController;
+Route::resource('photos', PhotoController::class);
+
+Route::resource('photos', PhotoController::class)->only([ 'index', 'show'
+]);
+
+Route::resource('photos', PhotoController::class)->except([ 'create', 'store', 'update', 'destroy'
+]);
